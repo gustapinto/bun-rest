@@ -1,0 +1,1 @@
+ALTER TABLE page_visit ADD COLUMN extra JSONB;

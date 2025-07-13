@@ -3,38 +3,39 @@ import PageVisitUseCases from "./use_cases";
 import { CreatePageVisitRequest } from "./types";
 
 export default class PageVisitApi {
-  private useCases: PageVisitUseCases
-
-  constructor(useCases: PageVisitUseCases) {
-    this.useCases = useCases
-  }
+  constructor(
+    private readonly useCases: PageVisitUseCases
+  ) {}
 
   routes(): Hono {
     return new Hono()
-      .get("/v1/visits", (c) => this.getAll(c))
-      .post("/v1/visits", (c) => this.create(c))
-      .get("/v1/visits-per-user", (c) => this.getAllPerUser(c))
+      .get("/v1/page-visits", (c) => this.getAll(c))
+      .post("/v1/page-visits", (c) => this.create(c))
+      .get("/v1/page-visits-per-user", (c) => this.getAllPerUser(c))
   }
 
-  async getAll(c: Context): Promise<any> {
+  private async getAll(c: Context): Promise<any> {
     const visits = await this.useCases.getAllPageVisits()
 
     return c.json(visits)
   }
 
-  async getAllPerUser(c: Context): Promise<any> {
+  private async getAllPerUser(c: Context): Promise<any> {
     const visits = await this.useCases.getAllPageVisitsPerUser()
 
     return c.json(visits)
   }
 
-  async create(c: Context): Promise<any> {
+  private async create(c: Context): Promise<any> {
     const req: CreatePageVisitRequest = await c.req.json()
 
     await this.useCases.createPageVisit(
       req.user_id,
       req.page,
       req.origin,
+      req.extra,
     )
+
+    return c.json({}, 201)
   }
 }

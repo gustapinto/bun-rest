@@ -1,4 +1,4 @@
-import { pgTable, uuid, timestamp, varchar } from "drizzle-orm/pg-core"
+import { pgTable, uuid, timestamp, varchar, jsonb } from "drizzle-orm/pg-core"
 import { sql } from "drizzle-orm"
 
 
@@ -9,4 +9,5 @@ export const pageVisit = pgTable("page_visit", {
 	userId: uuid("user_id").notNull(),
 	origin: varchar({ length: 500 }),
 	page: varchar({ length: 255 }).notNull(),
+	extra: jsonb(),
 });

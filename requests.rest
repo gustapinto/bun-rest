@@ -1,0 +1,54 @@
+# @name tracing/getHealth
+GET http://localhost:3000/v1/tracing/health
+Accept: application/json
+###
+
+# @name page-visit/getAll
+GET http://localhost:3000/v1/page-visits
+Accept: application/json
+###
+
+# @name page-visit/getAllPerUser
+GET http://localhost:3000/v1/page-visits-per-user
+Accept: application/json
+###
+
+# @name page-visit/createHome
+POST http://localhost:3000/v1/page-visits
+Accept: application/json
+Content-Type: application/json
+
+{
+  "user_id": "019804f5-f9c7-7f03-8d18-ba8d4957f692",
+  "origin": "landingpage/accessButton",
+  "page": "home",
+  "extra": {
+    "cookie_level": "all"
+  }
+}
+###
+
+# @name page-visit/createLanding
+POST http://localhost:3000/v1/page-visits
+Accept: application/json
+Content-Type: application/json
+
+{
+  "user_id": "019804f5-f9c7-7f03-8d18-ba8d4957f692",
+  "origin": null,
+  "page": "landingpage",
+  "extra": {
+    "cookie_level": "none",
+    "clicked_on": [
+      "productsCard",
+      "pricingModal",
+      "aboutUsModal"
+    ],
+    "communication": {
+      "allowed": true,
+      "channel": "email",
+      "email_address": "example@host.com"
+    }
+  }
+}
+###
